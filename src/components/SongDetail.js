@@ -1,25 +1,33 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const SongDetail = ({ song }) => {
+  if (!song) {
+    return "No song selected";
+  }
   return (
-    <div class="ui centered card">
-      <div class="image">
-        <img src={song.picture} />
+    <div className="ui centered card">
+      <div className="image">
+        <img src={song.picture} alt={song.title} />
       </div>
-      <div class="content">
-        <a class="header">{song.name}</a>
-        <div class="meta">
-          <span class="date">{song.author}</span>
+      <div className="content">
+        <p className="header">{song.title}</p>
+        <div className="meta">
+          <span className="date">{song.author}</span>
         </div>
       </div>
-      <div class="extra content">
-        <a>
-          <i class="clock icon"></i>
+      <div className="extra content">
+        <p>
+          <i className="clock icon"></i>
           {song.duration}
-        </a>
+        </p>
       </div>
     </div>
   );
 };
 
-export default SongDetail;
+const mapStateToProps = (state) => {
+  return { song: state.selectedSong };
+};
+
+export default connect(mapStateToProps)(SongDetail);
